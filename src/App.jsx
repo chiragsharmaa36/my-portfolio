@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { PORTFOLIO_DATA } from "./data";
+import { Button, Card, Navbar, Pill, SectionTitle } from "./components/reusable-components";
+import { PageBackground } from "./components/app-components";
 // Removed the import for "./App.css" as it was causing a build error and isn't needed with Tailwind
 import {
   Github,
@@ -15,128 +18,6 @@ import {
   Menu, // Imported Menu icon
   X,    // Imported Close icon
 } from "lucide-react";
-
-const PORTFOLIO_DATA = {
-  personal: {
-    name: "CHIRAG SHARMA",
-    role: "Software Engineer",
-    location: "India",
-    tagline: "Building high-performance mobile & web applications.",
-    email: "chirag.sharmaa36@gmail.com",
-    github: "https://github.com/chiragsharmaa36",
-    linkedin: "https://linkedin.com/in/chirag-css",
-    resumeUrl: "#", // Add your PDF link here later
-  },
-  skills: [
-    { name: "Flutter & Dart", icon: <Smartphone size={20} />, level: "Expert" },
-    { name: "Node.js & JS", icon: <Monitor size={20} />, level: "Advanced" },
-    {
-      name: "C++ / Python",
-      icon: <Terminal size={20} />,
-      level: "Intermediate",
-    },
-    { name: "WebSockets", icon: <Cpu size={20} />, level: "Advanced" },
-    {
-      name: "SQL & Firebase",
-      icon: <Database size={20} />,
-      level: "Intermediate",
-    },
-  ],
-  experience: [
-    {
-      company: "SapidBlue",
-      role: "Software Engineer",
-      period: "Aug 2024 - Apr 2025",
-      description:
-        "Developed cross-platform mobile apps. Implemented BLoC/Provider architecture reducing crashes by 40%.",
-      tags: ["Flutter", "Dart", "REST API", "Firebase"],
-    },
-    {
-      company: "Sgital",
-      role: "ServiceNow Intern",
-      period: "Jun 2023 - Aug 2023",
-      description:
-        "Achieved CSA certification. Built an attendance management system improving tracking efficiency by 30%.",
-      tags: ["ServiceNow", "JavaScript"],
-    },
-    {
-      company: "ISRO (Regional Remote Sensing Centre)",
-      role: "Research Intern",
-      period: "Jun 2022 - Jul 2022",
-      description:
-        "Built a real-time video meeting app for 50+ users. Optimized WebRTC to reduce lag by 35%.",
-      tags: ["Node.js", "WebRTC", "Socket.io", "PeerJS"],
-    },
-  ],
-  projects: [
-    {
-      title: "Real-Time Video Meeting App",
-      description:
-        "A low-latency video conferencing tool built to handle 50+ simultaneous users. Features include an interactive whiteboard and live chat, designed for seamless virtual collaboration.",
-      // Since you don't have a live link yet, we emphasize the Code.
-      links: [
-        {
-          label: "View Source",
-          url: "https://github.com/chiragsharmaa36/MyApp_WebApp_ProMeet",
-          icon: <Github size={16} />,
-        },
-      ],
-      tech: ["Node.js", "Socket.io", "PeerJS", "HTML/CSS"],
-      stats: [
-        { label: "Latency Reduction", value: "35%" },
-        { label: "Active Users", value: "50+" },
-        { label: "Engagement", value: "+30%" },
-      ],
-    },
-  ],
-};
-
-// Resusable UI components
-const SectionTitle = ({ children }) => (
-  <h2 className="text-3xl md:text-5xl font-black mb-12 uppercase tracking-tighter text-slate-900 relative inline-block">
-    {children}
-    {/* A decorative underline that looks like a highlighter mark */}
-    <span className="absolute -bottom-2 left-0 w-full h-2 bg-blue-500/30 -skew-x-12"></span>
-  </h2>
-);
-
-const Card = ({ children, className = "" }) => (
-  <div
-    className={`bg-white border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] p-6 transition-transform hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] ${className}`}
-  >
-    {children}
-  </div>
-);
-
-const Pill = ({ text }) => (
-  <span className="px-3 py-1 bg-blue-100 text-blue-800 border-2 border-blue-900 text-xs font-bold uppercase tracking-wider rounded-none">
-    {text}
-  </span>
-);
-
-const Button = ({ children, primary, href, onClick, icon: Icon }) => {
-  const baseClass =
-    "inline-flex items-center justify-center gap-2 px-6 py-3 font-bold text-sm uppercase tracking-widest transition-all active:translate-y-1 active:shadow-none border-2 border-slate-900";
-  const styles = primary
-    ? "bg-blue-600 text-white shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:bg-blue-700"
-    : "bg-white text-slate-900 shadow-[4px_4px_0px_0px_#cbd5e1] hover:bg-slate-50";
-
-  // Check if it's an internal link (starts with #)
-  const isInternal = href && href.startsWith('#');
-
-  return (
-    <a
-      href={href}
-      onClick={onClick}
-      target={isInternal ? "_self" : "_blank"}
-      rel={!isInternal ? "noreferrer" : undefined}
-      className={`${baseClass} ${styles}`}
-    >
-      {Icon && <Icon size={18} />}
-      {children}
-    </a>
-  );
-};
 
 function App() {
   const [activeSection, setActiveSection] = useState("home");
@@ -156,67 +37,8 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-200">
-      {/* BACKGROUND PATTERN
-        We use a subtle radial gradient and a grid pattern to give it that "technical" paper look.
-      */}
-      <div
-        className="fixed inset-0 z-0 opacity-40 pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-      ></div>
-
-      {/* NAVIGATION */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-50/90 backdrop-blur-md border-b-2 border-slate-900">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div
-            className="font-black text-xl tracking-tighter cursor-pointer hover:text-blue-600 transition-colors"
-            onClick={() => scrollTo("home")}
-          >
-            @{PORTFOLIO_DATA.personal.name.replace(" ", "").toLowerCase()}
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex gap-8 font-bold text-sm tracking-wide">
-            {navItems.map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollTo(item.toLowerCase())}
-                className="hover:text-blue-600 hover:underline decoration-2 underline-offset-4 uppercase"
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-
-          {/* Mobile Menu Toggle */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-slate-900 focus:outline-none"
-            >
-              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation Dropdown */}
-        {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-slate-50 border-b-2 border-slate-900 p-6 flex flex-col gap-4 shadow-xl z-50 animate-in slide-in-from-top-2">
-            {navItems.map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollTo(item.toLowerCase())}
-                className="text-left font-black text-xl uppercase tracking-wider py-2 border-b border-slate-200 hover:text-blue-600 hover:pl-2 transition-all"
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-        )}
-      </nav>
+      <PageBackground />
+      <Navbar scrollTo={scrollTo} navItems={navItems} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
       {/* Main Container */}
       <main className="relative z-10 max-w-6xl mx-auto px-6 pt-32 pb-20">
@@ -306,7 +128,6 @@ function App() {
                 {/* Timeline line */}
                 <div className="absolute left-[-24px] top-6 bottom-0 w-0.5 bg-slate-200 hidden md:block group-last:hidden"></div>
                 <div className="absolute left-[-29px] top-6 w-3 h-3 rounded-full bg-blue-500 border-2 border-white shadow-sm hidden md:block"></div>
-
                 <Card className="md:ml-4">
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                     <div>
@@ -335,8 +156,71 @@ function App() {
           </div>
         </section>
 
-        {/* PROJECT SECTION - SPOTLIGHT */}
-        <section id="projects" className="py-20">
+        <ProjectSection PORTFOLIO_DATA={PORTFOLIO_DATA} />
+
+        {/* ABOUT / SKILLS DETAILED */}
+        <section id="about" className="py-20 border-t-2 border-slate-200">
+          <div className="bg-slate-900 text-white p-8 md:p-12 relative overflow-hidden">
+            {/* Decorative Circle */}
+            <div className="absolute -right-20 -top-20 w-64 h-64 bg-blue-600 rounded-full opacity-20 blur-3xl"></div>
+
+            <div className="relative z-10 flex flex-col md:flex-row gap-12">
+              <div className="flex-1">
+                <h2 className="text-3xl font-black mb-6 uppercase text-white">
+                  The Person Behind the Code
+                </h2>
+                <p className="text-slate-300 leading-relaxed mb-6">
+                  I am a Computer Science graduate from{" "}
+                  <span className="text-white font-bold">MBM University, Jodhpur, Rajasthan, India</span>{" "}
+                  (CGPA 8.49/10). My journey started with simple scripts and
+                  evolved into building complex real-time systems at ISRO.
+                </p>
+                <p className="text-slate-300 leading-relaxed">
+                  When I'm not debugging Flutter apps or optimizing Node.js
+                  servers, I'm likely exploring new UI design trends or studying
+                  system architecture.
+                </p>
+              </div>
+              <div className="flex-1 border-l-2 border-slate-700 pl-0 md:pl-12 pt-8 md:pt-0">
+                <h3 className="font-mono text-blue-400 mb-6 uppercase tracking-widest">
+                  Core Competencies
+                </h3>
+                <ul className="space-y-4">
+                  {[
+                    "Cross-Platform Development",
+                    "Real-time Communication (WebRTC)",
+                    "Backend Architecture",
+                    "UI/UX Design Implementation",
+                  ].map((item) => (
+                    <li key={item} className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-blue-500"></div>
+                      <span className="font-bold">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <ContactSection email={PORTFOLIO_DATA.personal.email} github={PORTFOLIO_DATA.personal.github} linkedin={PORTFOLIO_DATA.personal.linkedin} />
+      </main>
+
+      {/* FOOTER */}
+      <footer className="bg-slate-900 text-slate-400 py-12 text-center border-t-4 border-blue-600">
+        <div className="font-mono text-sm mb-2">
+          &lt;Designed & Built by {PORTFOLIO_DATA.personal.name} /&gt;
+        </div>
+        <div className="text-xs opacity-50">
+          © {new Date().getFullYear()} • Minimalist Neo-Brutalism Style
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+const ProjectSection = ({PORTFOLIO_DATA}) => {
+  return (<section id="projects" className="py-20">
           <div className="flex flex-col md:flex-row items-end justify-between mb-12">
             <SectionTitle>Featured Build</SectionTitle>
             <div className="hidden md:block mb-12 font-mono text-sm text-slate-500">
@@ -394,7 +278,7 @@ function App() {
                           <Button
                             key={link.label}
                             href={link.url}
-                            icon={Github}
+                            icon={link.icon === "Github" ? Github  : ExternalLink } size={16}
                             primary
                           >
                             {link.label}
@@ -415,10 +299,10 @@ function App() {
                           </div>
                           {/* Image filling window */}
                           <div className="flex-1 bg-slate-900">
-                            <img 
-                                src="/assets/promeet.jpg" 
-                                alt="Real-Time Video Meeting App Screenshot" 
-                                className="w-full h-full object-cover"
+                            <img
+                              src={project.imageSection.imageURL}
+                              alt={project.imageSection.altText}
+                              className="w-full h-full object-cover"
                             />
                           </div>
                         </div>
@@ -431,120 +315,229 @@ function App() {
               </div>
             ))}
           </div>
-        </section>
-
-        {/* ABOUT / SKILLS DETAILED */}
-        <section id="about" className="py-20 border-t-2 border-slate-200">
-          <div className="bg-slate-900 text-white p-8 md:p-12 relative overflow-hidden">
-            {/* Decorative Circle */}
-            <div className="absolute -right-20 -top-20 w-64 h-64 bg-blue-600 rounded-full opacity-20 blur-3xl"></div>
-
-            <div className="relative z-10 flex flex-col md:flex-row gap-12">
-              <div className="flex-1">
-                <h2 className="text-3xl font-black mb-6 uppercase text-white">
-                  The Person Behind the Code
-                </h2>
-                <p className="text-slate-300 leading-relaxed mb-6">
-                  I am a Computer Science graduate from{" "}
-                  <span className="text-white font-bold">MBM University</span>{" "}
-                  (CGPA 8.49/10). My journey started with simple scripts and
-                  evolved into building complex real-time systems at ISRO.
-                </p>
-                <p className="text-slate-300 leading-relaxed">
-                  When I'm not debugging Flutter apps or optimizing Node.js
-                  servers, I'm likely exploring new UI design trends or studying
-                  system architecture.
-                </p>
-              </div>
-              <div className="flex-1 border-l-2 border-slate-700 pl-0 md:pl-12 pt-8 md:pt-0">
-                <h3 className="font-mono text-blue-400 mb-6 uppercase tracking-widest">
-                  Core Competencies
-                </h3>
-                <ul className="space-y-4">
-                  {[
-                    "Cross-Platform Development",
-                    "Real-time Communication (WebRTC)",
-                    "Backend Architecture",
-                    "UI/UX Design Implementation",
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-blue-500"></div>
-                      <span className="font-bold">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CONTACT SECTION */}
-        <section id="contact" className="py-20 mb-20">
-          <SectionTitle>Let's Connect</SectionTitle>
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="bg-blue-50 border-blue-900">
-              <h3 className="text-2xl font-black mb-2">Hire Me?</h3>
-              <p className="text-slate-600 mb-6">
-                I am currently open to new opportunities as a Software Engineer.
-                If you have a role that requires Flutter or Full Stack
-                expertise, let's talk.
-              </p>
-              <Button
-                primary
-                href={`mailto:${PORTFOLIO_DATA.personal.email}`}
-                icon={Mail}
-              >
-                Send Email
-              </Button>
-            </Card>
-
-            <div className="grid gap-4">
-              <a
-                href={PORTFOLIO_DATA.personal.github}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-between p-6 bg-white border-2 border-slate-900 shadow-sm hover:bg-slate-50 transition-colors group"
-              >
-                <span className="font-black text-lg flex items-center gap-3">
-                  <Github className="group-hover:text-blue-600 transition-colors" />{" "}
-                  GitHub
-                </span>
-                <ExternalLink
-                  size={16}
-                  className="text-slate-400 group-hover:text-slate-900"
-                />
-              </a>
-              <a
-                href={PORTFOLIO_DATA.personal.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-between p-6 bg-white border-2 border-slate-900 shadow-sm hover:bg-slate-50 transition-colors group"
-              >
-                <span className="font-black text-lg flex items-center gap-3">
-                  <Linkedin className="group-hover:text-blue-700 transition-colors" />{" "}
-                  LinkedIn
-                </span>
-                <ExternalLink
-                  size={16}
-                  className="text-slate-400 group-hover:text-slate-900"
-                />
-              </a>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* FOOTER */}
-      <footer className="bg-slate-900 text-slate-400 py-12 text-center border-t-4 border-blue-600">
-        <div className="font-mono text-sm mb-2">
-          &lt;Designed & Built by {PORTFOLIO_DATA.personal.name} /&gt;
-        </div>
-        <div className="text-xs opacity-50">
-          © {new Date().getFullYear()} • Minimalist Neo-Brutalism Style
-        </div>
-      </footer>
-    </div>
-  );
+        </section>);
 }
+
+const ContactSection = ({ email, github, linkedin }) => {
+  return (<section id="contact" className="py-20 mb-20">
+    <SectionTitle>Let's Connect</SectionTitle>
+    <div className="grid md:grid-cols-2 gap-8">
+      <Card className="bg-blue-50 border-blue-900">
+        <h3 className="text-2xl font-black mb-2">Hire Me?</h3>
+        <p className="text-slate-600 mb-6">
+          I am currently open to new opportunities as a Software Engineer.
+          If you have a role that requires Flutter or Full Stack
+          expertise, let's talk.
+        </p>
+        <Button
+          primary
+          href={`mailto:${email}`}
+          icon={Mail}
+        >
+          Send Email
+        </Button>
+      </Card>
+
+      <div className="grid gap-4">
+        <a
+          href={github}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center justify-between p-6 bg-white border-2 border-slate-900 shadow-sm hover:bg-slate-50 transition-colors group"
+        >
+          <span className="font-black text-lg flex items-center gap-3">
+            <Github className="group-hover:text-blue-600 transition-colors" />{" "}
+            GitHub
+          </span>
+          <ExternalLink
+            size={16}
+            className="text-slate-400 group-hover:text-slate-900"
+          />
+        </a>
+        <a
+          href={linkedin}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center justify-between p-6 bg-white border-2 border-slate-900 shadow-sm hover:bg-slate-50 transition-colors group"
+        >
+          <span className="font-black text-lg flex items-center gap-3">
+            <Linkedin className="group-hover:text-blue-700 transition-colors" />{" "}
+            LinkedIn
+          </span>
+          <ExternalLink
+            size={16}
+            className="text-slate-400 group-hover:text-slate-900"
+          />
+        </a>
+      </div>
+    </div>
+  </section>);
+}
+
+
+// --- Contact Us Form ---
+// const ContactSection = ({ email, github, linkedin }) => {
+//   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+//   const [status, setStatus] = useState("idle"); // 'idle' | 'submitting' | 'success' | 'error'
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({ ...prev, [name]: value }));
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setStatus("submitting");
+
+//     // TODO: Simply replace this with the Web3Forms Access Key or just ignore if testing locally
+//     const ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY_HERE"; 
+
+//     try {
+//       const response = await fetch("https://api.web3forms.com/submit", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Accept: "application/json",
+//         },
+//         body: JSON.stringify({
+//           access_key: ACCESS_KEY,
+//           ...formData,
+//         }),
+//       });
+
+//       const result = await response.json();
+//       if (result.success) {
+//         setStatus("success");
+//         setFormData({ name: "", email: "", message: "" });
+//       } else {
+//         // If they enter an invalid access key it fails
+//         setStatus("error");
+//       }
+//     } catch (error) {
+//       setStatus("error");
+//     }
+//   };
+
+//   return (
+//     <section id="contact" className="py-20 mb-20">
+//       <SectionTitle>Let's Connect</SectionTitle>
+//       <div className="grid md:grid-cols-2 gap-8">
+//         <Card className="bg-blue-50 border-blue-900">
+//           <h3 className="text-2xl font-black mb-6 uppercase">Send a Message</h3>
+
+//           {status === "success" ? (
+//             <div className="bg-green-100 border-2 border-green-900 p-6 text-center animate-in fade-in">
+//               <div className="text-xl font-black text-green-800 mb-2">Message Sent!</div>
+//               <p className="text-green-700 font-medium">I'll get back to you as soon as possible.</p>
+//               <button 
+//                 onClick={() => setStatus("idle")}
+//                 className="mt-6 text-sm font-bold uppercase underline decoration-2 underline-offset-4 hover:text-green-900 transition-colors"
+//               >
+//                 Send another message
+//               </button>
+//             </div>
+//           ) : (
+//             <form onSubmit={handleSubmit} className="flex flex-col gap-4 animate-in fade-in">
+//               <div className="flex flex-col gap-1">
+//                 <label htmlFor="name" className="font-bold text-sm uppercase">Name</label>
+//                 <input 
+//                   type="text" 
+//                   id="name"
+//                   name="name"
+//                   required
+//                   value={formData.name}
+//                   onChange={handleChange}
+//                   className="p-3 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-none transition-all"
+//                   placeholder="John Doe"
+//                 />
+//               </div>
+//               <div className="flex flex-col gap-1">
+//                 <label htmlFor="email" className="font-bold text-sm uppercase">Email</label>
+//                 <input 
+//                   type="email" 
+//                   id="email"
+//                   name="email"
+//                   required
+//                   value={formData.email}
+//                   onChange={handleChange}
+//                   className="p-3 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-none transition-all"
+//                   placeholder="john@example.com"
+//                 />
+//               </div>
+//               <div className="flex flex-col gap-1">
+//                 <label htmlFor="message" className="font-bold text-sm uppercase">Message</label>
+//                 <textarea 
+//                   id="message"
+//                   name="message"
+//                   required
+//                   rows={4}
+//                   value={formData.message}
+//                   onChange={handleChange}
+//                   className="p-3 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-none transition-all resize-y"
+//                   placeholder="Hello, I'd like to talk about..."
+//                 />
+//               </div>
+
+//               {status === "error" && (
+//                 <div className="bg-red-100 border-2 border-red-900 p-3 text-red-800 font-bold text-sm mt-2">
+//                   Unable to send message. Please ensure you added your Access Key or try sending an email directly.
+//                 </div>
+//               )}
+
+//               <button 
+//                 type="submit"
+//                 disabled={status === "submitting"}
+//                 className="mt-2 bg-blue-600 text-white font-black text-lg uppercase tracking-widest p-4 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:bg-blue-700 hover:shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] -hover:translate-y-1 active:translate-y-1 active:shadow-none transition-all disabled:opacity-70 disabled:cursor-not-allowed group"
+//               >
+//                 {status === "submitting" ? "Sending..." : "Submit Message"}
+//               </button>
+//             </form>
+//           )}
+//         </Card>
+
+//         <div className="grid gap-4">
+//           <Card className="flex flex-col justify-center items-center text-center p-8 bg-white h-full group hover:bg-blue-50">
+//             <Mail size={40} className="mb-4 text-slate-900 group-hover:text-blue-600 transition-colors" />
+//             <h4 className="text-xl font-black mb-2 uppercase">Direct Email</h4>
+//             <a href={`mailto:${email}`} className="text-slate-600 hover:text-blue-600 hover:underline font-medium transition-colors">
+//               {email}
+//             </a>
+//           </Card>
+
+//           <a
+//             href={github}
+//             target="_blank"
+//             rel="noreferrer"
+//             className="flex items-center justify-between p-6 bg-white border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:bg-slate-50 transition-all hover:shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] hover:-translate-y-1 group active:translate-y-1 active:shadow-none"
+//           >
+//             <span className="font-black text-lg flex items-center gap-3">
+//               <Github className="group-hover:text-blue-600 transition-colors" />{" "}
+//               GitHub
+//             </span>
+//             <ExternalLink
+//               size={16}
+//               className="text-slate-400 group-hover:text-slate-900"
+//             />
+//           </a>
+//           <a
+//             href={linkedin}
+//             target="_blank"
+//             rel="noreferrer"
+//             className="flex items-center justify-between p-6 bg-white border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:bg-slate-50 transition-all hover:shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] hover:-translate-y-1 group active:translate-y-1 active:shadow-none"
+//           >
+//             <span className="font-black text-lg flex items-center gap-3">
+//               <Linkedin className="group-hover:text-blue-700 transition-colors" />{" "}
+//               LinkedIn
+//             </span>
+//             <ExternalLink
+//               size={16}
+//               className="text-slate-400 group-hover:text-slate-900"
+//             />
+//           </a>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
 
 export default App;
